@@ -7,12 +7,12 @@ public record Triangle(double a, double b, double c) {
         System.out.println(text);
     }
 
-    public static void printTriangleArea(double a, double b, double c){
-        String text = String.format("Площадь триугольника со сторонами %f, %f и %f = %f", a, b, c, triangleArea(a, b, c));
+    public static void printTriangleArea(Triangle t){
+        String text = String.format("Площадь триугольника со сторонами %f, %f и %f = %f", t.a, t.b, t.c, t.triangleArea());
         System.out.println(text);
     }
 
-    public static double triangleArea(double a, double b, double c) {
+    public double triangleArea() {
         double p = (a+b+c)/2;
         double t = p*(p-a)*(p-b)*(p-c);
         return Math.sqrt(t);

@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 public class TriangleTests {
     @Test
     void canCalculateArea() {
-        Assertions.assertEquals(6.0, Triangle.triangleArea(3.0, 4.0, 5.0));
+        var t = new Triangle(3.0,4.0,5.0);
+        double result = t.triangleArea();
+        Assertions.assertEquals(6.0, result);
     }
 
     @Test
