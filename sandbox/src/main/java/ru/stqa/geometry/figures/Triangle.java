@@ -2,8 +2,8 @@ package ru.stqa.geometry.figures;
 
 public record Triangle(double a, double b, double c) {
 
-    public static void printTrianglePerimeter(double a, double b, double c) {
-        String text = String.format("Периметр триугольника со сторонами %f, %f и %f = %f", a, b, c, trianglePerimeter(a, b, c));
+    public static void printTrianglePerimeter(Triangle t) {
+        String text = String.format("Периметр триугольника со сторонами %f, %f и %f = %f", t.a, t.b, t.c, t.trianglePerimeter());
         System.out.println(text);
     }
 
@@ -18,7 +18,7 @@ public record Triangle(double a, double b, double c) {
         return Math.sqrt(t);
     }
 
-    public double trianglePerimeter(double a, double b, double c) {
+    public double trianglePerimeter() {
         return a + b +c;
     }
 }
