@@ -18,7 +18,7 @@ public record Triangle(double a, double b, double c) {
         return Math.sqrt(t);
     }
 
-    public static double trianglePerimeter(double a, double b, double c) {
+    public double trianglePerimeter(double a, double b, double c) {
         return a + b +c;
     }
 }
