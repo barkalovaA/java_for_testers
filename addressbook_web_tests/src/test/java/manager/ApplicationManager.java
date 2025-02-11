@@ -56,13 +56,4 @@ public class ApplicationManager {
             return false;
         }
     }
-
-    public boolean isElementPresent(By locator, TestBase testBase) {
-      try {
-        driver.findElement(locator);
-        return true;
-      } catch (NoSuchElementException exception) {
-        return false;
-      }
-    }
 }

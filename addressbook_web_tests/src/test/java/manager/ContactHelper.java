@@ -3,7 +3,6 @@ package manager;
 import model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import tests.TestBase;
 
 public class ContactHelper {
     protected final ApplicationManager manager;

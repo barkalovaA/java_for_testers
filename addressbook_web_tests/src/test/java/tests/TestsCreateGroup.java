@@ -22,8 +22,6 @@ public class TestsCreateGroup extends TestBase {
 
     @Test
     public void canCreateGroupWithHeaderOnly() {
-        var emptyGroup = new GroupData();
-        var groupWithHeader = emptyGroup.withHeader("some Header");
-        app.groups().createGroup(groupWithHeader);
+        app.groups().createGroup(new GroupData().withHeader("some Header"));
     }
 }
