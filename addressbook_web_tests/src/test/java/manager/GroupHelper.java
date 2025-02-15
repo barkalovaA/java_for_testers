@@ -31,7 +31,7 @@ public class GroupHelper extends HelperBase {
     public void deleteGroup() {
         openGroupsPage();
         selectGroup();
-        deleteSelectedCroup();
+        deleteSelectedGroups();
         returnToGroupsPage();
         click(By.cssSelector("form:nth-child(2)"));
     }
@@ -53,7 +53,7 @@ public class GroupHelper extends HelperBase {
         click(By.name("new"));
     }
 
-    private void deleteSelectedCroup() {
+    private void deleteSelectedGroups() {
         click(By.name("delete"));
     }
 
@@ -77,5 +77,23 @@ public class GroupHelper extends HelperBase {
 
     private void selectGroup() {
         click(By.name("selected[]"));
+    }
+
+    public int getCount() {
+        openGroupsPage();
+        return manager.driver.findElements(By.name("selected[]")).size();
+    }
+
+    public void deleteAllGroups() {
+        openGroupsPage();
+        selectAllGroups();
+        deleteSelectedGroups();
+    }
+
+    private void selectAllGroups() {
+        var checkboxes = manager.driver.findElements(By.name("selected[]"));
+        for (var checkbox : checkboxes){
+            checkbox.click();
+        }
     }
 }

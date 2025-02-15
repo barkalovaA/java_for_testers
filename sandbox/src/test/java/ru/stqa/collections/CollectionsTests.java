@@ -10,6 +10,7 @@ public class CollectionsTests {
 
     @Test
     void arrayTests() {
+       //массив
        // var array = new String[]{"a", "b", "c"};
         var array = new String[3];
         Assertions.assertEquals(3, array.length);
@@ -22,6 +23,7 @@ public class CollectionsTests {
 
     @Test
     void listTest(){
+       //список
         //var list = List.of("a", "b", "c"); если список создан через List.of, то его нельзя модифицировать
         //var list = new ArrayList<String>(List.of("a", "b", "c")); ArrayList можно скомбинировать с List.of и удалить String, смотри стороку ниже
         var list = new ArrayList<>(List.of("a", "b", "c"));
