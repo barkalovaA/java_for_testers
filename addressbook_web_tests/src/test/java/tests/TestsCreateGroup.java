@@ -28,4 +28,17 @@ public class TestsCreateGroup extends TestBase {
     public void canCreateGroupWithHeaderOnly() {
         app.groups().createGroup(new GroupData().withHeader("some Header"));
     }
+
+    @Test
+    public void canCreateMultipleGroups() {
+        int n = 5;
+        int groupCount = app.groups().getCount();
+
+        for (int i = 0; i < n; i++) {
+            app.groups().createGroup(new GroupData(randomString(i * 4), "group header", "group footer"));
+        }
+
+        int newGroupCount = app.groups().getCount();
+        Assertions.assertEquals(groupCount + n, newGroupCount);
+    }
 }
