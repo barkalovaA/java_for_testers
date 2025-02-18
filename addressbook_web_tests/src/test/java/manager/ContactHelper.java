@@ -73,11 +73,11 @@ public class ContactHelper {
       }
         manager.driver.findElement(By.name("ayear")).click();
         manager.driver.findElement(By.name("ayear")).sendKeys("1975");
-        manager.driver.findElement(By.name("new_group")).click();
-      {
-        WebElement dropdown = manager.driver.findElement(By.name("new_group"));
-        dropdown.findElement(By.xpath("//option[. = 'test_1']")).click();
-      }
+        // manager.driver.findElement(By.name("new_group")).click();
+      //{
+        //WebElement dropdown = manager.driver.findElement(By.name("new_group"));
+        //dropdown.findElement(By.xpath("//option[. = '']")).click();
+      //}
         manager.driver.findElement(By.cssSelector("input:nth-child(75)")).click();
         manager.driver.findElement(By.linkText("home page")).click();
     }
@@ -85,5 +85,17 @@ public class ContactHelper {
     public void deleteContact() {
         manager.driver.findElement(By.name("selected[]")).click();
         manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
+    }
+
+    public int getContactCount() {
+        openHomePage();
+        return  manager.driver.findElements(By.name("selected[]")).size();
+    }
+
+    public void deleteAllContacts() {
+    //    manager.driver.findElement(By.linkText("home")).click();
+        manager.driver.findElement(By.id("MassCB")).click();
+        manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
+    //    manager.driver.findElement(By.linkText("home")).click();
     }
 }
