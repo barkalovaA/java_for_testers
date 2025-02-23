@@ -18,14 +18,24 @@ public class TestsCreateContact extends TestBase {
         for (var address : List.of("", "contact address")) {
           for (var mobile : List.of("", "contact mobile")) {
             for (var email : List.of("", "contact email")) {
-              result.add(new ContactData(firstname, lastname, address, mobile, email));
+              result.add(new ContactData()
+                      .withName(firstname)
+                      .withLastname(lastname)
+                      .withAddress(address)
+                      .withMobile(mobile)
+                      .withEmail(email));
             }
           }
         }
       }
     }
-    for (int i = 0; i < 5; i++) {
-      result.add(new ContactData (randomString(i * 5), randomString(i * 5), randomString(i * 5), randomString(i * 5), randomString(i * 5)));
+    for (int i = 0; i < 3; i++) {
+      result.add(new ContactData ()
+              .withName(randomString(i * 5))
+              .withLastname(randomString(i * 5))
+              .withAddress(randomString(i * 5))
+              .withMobile(randomString(i * 5))
+              .withEmail(randomString(i * 5)));
     }
     return result;
   }

@@ -4,6 +4,9 @@ import model.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactHelper {
     protected final ApplicationManager manager;
     public ContactHelper(ApplicationManager manager) {
@@ -82,9 +85,17 @@ public class ContactHelper {
         manager.driver.findElement(By.linkText("home page")).click();
     }
 
-    public void deleteContact() {
-        manager.driver.findElement(By.name("selected[]")).click();
+    public void deleteContact(ContactData contact) {
+        selectContact(contact);
         manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
+    }
+
+    private void selectContact(ContactData contact) {
+        click(By.cssSelector(String.format("input[value='%s']", contact.idContact())));
+    }
+
+    private void click(By locator) {
+        manager.driver.findElement(locator).click();
     }
 
     public int getContactCount() {
@@ -97,5 +108,33 @@ public class ContactHelper {
         manager.driver.findElement(By.id("MassCB")).click();
         manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
     //    manager.driver.findElement(By.linkText("home")).click();
+    }
+    public void deleteContacts() {
+        manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
+    }
+    public void deleteAllContactsViaCheck() {
+        openHomePage();
+        selectAllContacts();
+        deleteContacts();
+    }
+
+    private void selectAllContacts() {
+        var checkboxes = manager.driver.findElements(By.name("selected[]"));
+        for (var checkbox : checkboxes){
+            checkbox.click();
+        }
+    }
+
+    public List<ContactData> getListContact() {
+        openHomePage();
+        var contacts = new ArrayList<ContactData>();
+        var trs = manager.driver.findElements(By.cssSelector("tr.entry"));
+        for (var tr : trs) {
+            var firstname = tr.getText();
+            var checkbox = tr.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            contacts.add(new ContactData().withId(id).withName(firstname));
+        }
+        return contacts;
     }
 }
