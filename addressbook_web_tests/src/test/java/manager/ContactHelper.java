@@ -128,7 +128,7 @@ public class ContactHelper {
     public List<ContactData> getListContact() {
         openHomePage();
         var contacts = new ArrayList<ContactData>();
-        var trs = manager.driver.findElements(By.cssSelector("tr.entry"));
+        var trs = manager.driver.findElements(By.name("entry"));
         for (var tr : trs) {
             var firstname = tr.getText();
             var checkbox = tr.findElement(By.name("selected[]"));
