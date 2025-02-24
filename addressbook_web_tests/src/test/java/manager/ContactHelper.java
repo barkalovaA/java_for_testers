@@ -23,12 +23,9 @@ public class ContactHelper {
 
     public void createContact(ContactData contact) {
         manager.driver.findElement(By.linkText("add new")).click();
-        manager.driver.findElement(By.name("firstname")).click();
-        manager.driver.findElement(By.name("firstname")).sendKeys(contact.firstname());
+        fillFirstLastNameOfContactForm(contact);
         manager.driver.findElement(By.name("middlename")).click();
         manager.driver.findElement(By.name("middlename")).sendKeys("test1");
-        manager.driver.findElement(By.name("lastname")).click();
-        manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastname());
         manager.driver.findElement(By.name("nickname")).click();
         manager.driver.findElement(By.name("nickname")).sendKeys("test1");
         manager.driver.findElement(By.name("title")).click();
@@ -85,6 +82,15 @@ public class ContactHelper {
         manager.driver.findElement(By.linkText("home page")).click();
     }
 
+    private void fillFirstLastNameOfContactForm(ContactData contact) {
+        manager.driver.findElement(By.name("firstname")).click();
+        manager.driver.findElement(By.name("firstname")).clear();
+        manager.driver.findElement(By.name("firstname")).sendKeys(contact.firstname());
+        manager.driver.findElement(By.name("lastname")).click();
+        manager.driver.findElement(By.name("lastname")).clear();
+        manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastname());
+    }
+
     public void deleteContact(ContactData contact) {
         selectContact(contact);
         manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
@@ -133,8 +139,30 @@ public class ContactHelper {
             var firstname = tr.getText();
             var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
-            contacts.add(new ContactData().withId(id).withName(firstname));
+            contacts.add(new ContactData().withId(id).withFirstname(firstname));
         }
         return contacts;
+    }
+
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
+        openHomePage();
+        selectContact(contact);
+        initContactModification();
+        fillFirstLastNameOfContactForm(modifiedContact);
+        submitContactModification();
+        returnToHomePage();
+    }
+
+    private void returnToHomePage() {
+        click(By.linkText("home page"));
+    }
+
+    private void submitContactModification() {
+        click(By.name("update"));
+        //manager.driver.findElement(By.name("update")).click();
+    }
+
+    private void initContactModification() {
+        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 }

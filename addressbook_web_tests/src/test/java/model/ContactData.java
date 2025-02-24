@@ -9,7 +9,7 @@ public record ContactData(String idContact, String firstname, String lastname, S
         return new ContactData(idContact, this.firstname, this.lastname, this.address, this.mobile, this.email);
     }
 
-    public ContactData withName(String firstname){
+    public ContactData withFirstname(String firstname){
         return new ContactData(this.idContact, firstname, this.lastname, this.address, this.mobile, this.email);
     }
 

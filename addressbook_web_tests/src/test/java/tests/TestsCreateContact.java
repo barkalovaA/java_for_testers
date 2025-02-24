@@ -19,7 +19,7 @@ public class TestsCreateContact extends TestBase {
           for (var mobile : List.of("", "contact mobile")) {
             for (var email : List.of("", "contact email")) {
               result.add(new ContactData()
-                      .withName(firstname)
+                      .withFirstname(firstname)
                       .withLastname(lastname)
                       .withAddress(address)
                       .withMobile(mobile)
@@ -31,7 +31,7 @@ public class TestsCreateContact extends TestBase {
     }
     for (int i = 0; i < 3; i++) {
       result.add(new ContactData ()
-              .withName(randomString(i * 5))
+              .withFirstname(randomString(i * 5))
               .withLastname(randomString(i * 5))
               .withAddress(randomString(i * 5))
               .withMobile(randomString(i * 5))
@@ -52,7 +52,7 @@ public class TestsCreateContact extends TestBase {
 
   @Test
   public void canCreateContactWithNameOnly() {
-    app.contacts().createContact(new ContactData().withName("Some firstname"));
+    app.contacts().createContact(new ContactData().withFirstname("Some firstname"));
   }
 
   @Test
