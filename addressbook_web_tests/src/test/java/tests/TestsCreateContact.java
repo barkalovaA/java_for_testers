@@ -41,10 +41,13 @@ public class TestsCreateContact extends TestBase {
     return result;
   }
 
-  //@Test
-  //public void canCreateContact() {
-  //  app.contacts().createContact(new ContactData("test_1","test_1","test_1","test_1","test_1"));
-  //}
+  @Test
+  public void canCreateContact() {
+    app.contacts().createContact(new ContactData()
+            .withFirstname(randomString(10))
+            .withLastname(randomString(10))
+            .withPhoto("src/test/resources/images/avatar.png"));
+  }
 
   //@Test
   //public void canCreateContactEmpty() {
@@ -57,8 +60,8 @@ public class TestsCreateContact extends TestBase {
   }
 
   @Test
-  public void canCreateContactWithAddressOnly() {
-    app.contacts().createContact(new ContactData().withAddress("Some address"));
+  public void canCreateContactWithAddressAndEmail() {
+    app.contacts().createContact(new ContactData().withAddress("Some address").withEmail("test@test.ru"));
   }
 
   @ParameterizedTest
