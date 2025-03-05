@@ -45,8 +45,8 @@ public class TestsCreateContact extends TestBase {
   public void canCreateContact() {
     app.contacts().createContact(new ContactData()
             .withFirstname(randomString(10))
-            .withLastname(randomString(10))
-            .withPhoto("src/test/resources/images/avatar.png"));
+            .withLastname(randomString(10)));
+ //           .withPhoto("src/test/resources/images/avatar.png")));
   }
 
   //@Test

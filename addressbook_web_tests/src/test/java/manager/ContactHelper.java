@@ -7,14 +7,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactHelper {
-    protected final ApplicationManager manager;
+public class ContactHelper extends HelperBase{
+    //protected final ApplicationManager manager;
     public ContactHelper(ApplicationManager manager) {
-        this.manager = manager;
+    //    this.manager = manager;
+        super(manager);
     }
 
     public void openHomePage() {
-        manager.driver.findElement(By.linkText("home")).click();
+        click(By.linkText("home"));
     }
 
     public boolean isContactPresent() {
@@ -22,25 +23,27 @@ public class ContactHelper {
     }
 
     public void createContact(ContactData contact) {
-        manager.driver.findElement(By.linkText("add new")).click();
+        click(By.linkText("add new"));
         fillFirstLastNameOfContactForm(contact);
-        manager.driver.findElement(By.name("address")).click();
+        click(By.name("address"));
         manager.driver.findElement(By.name("address")).sendKeys(contact.address());
-        manager.driver.findElement(By.name("mobile")).click();
+        click(By.name("mobile"));
         manager.driver.findElement(By.name("mobile")).sendKeys(contact.mobile());
-        manager.driver.findElement(By.name("email")).click();
+        click(By.name("email"));
         manager.driver.findElement(By.name("email")).sendKeys(contact.email());
-        manager.driver.findElement(By.cssSelector("input:nth-child(75)")).click();
-        manager.driver.findElement(By.linkText("home page")).click();
+        click(By.cssSelector("input:nth-child(75)"));
+        click(By.linkText("home page"));
     }
 
     private void fillFirstLastNameOfContactForm(ContactData contact) {
-        manager.driver.findElement(By.name("firstname")).click();
-        manager.driver.findElement(By.name("firstname")).clear();
-        manager.driver.findElement(By.name("firstname")).sendKeys(contact.firstname());
-        manager.driver.findElement(By.name("lastname")).click();
-        manager.driver.findElement(By.name("lastname")).clear();
-        manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastname());
+        //click(By.name("firstname"));
+        //manager.driver.findElement(By.name("firstname")).clear();
+        //manager.driver.findElement(By.name("firstname")).sendKeys(contact.firstname());
+        //click(By.name("lastname"));
+        //manager.driver.findElement(By.name("lastname")).clear();
+        //manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastname());
+        type(By.name("firstname"), contact.firstname());
+        type(By.name("lastname"), contact.lastname());
     }
 
     //private void attach (String file) {
@@ -49,15 +52,11 @@ public class ContactHelper {
 
     public void deleteContact(ContactData contact) {
         selectContact(contact);
-        manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
+        click(By.xpath("//input[@value=\'Delete\']"));
     }
 
     private void selectContact(ContactData contact) {
         click(By.cssSelector(String.format("input[value='%s']", contact.idContact())));
-    }
-
-    private void click(By locator) {
-        manager.driver.findElement(locator).click();
     }
 
     public int getContactCount() {
@@ -66,11 +65,11 @@ public class ContactHelper {
     }
 
     public void deleteAllContacts() {
-        manager.driver.findElement(By.id("MassCB")).click();
-        manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
+        click(By.id("MassCB"));
+        deleteContacts();
     }
     public void deleteContacts() {
-        manager.driver.findElement(By.xpath("//input[@value=\'Delete\']")).click();
+        click(By.xpath("//input[@value=\'Delete\']"));
     }
     public void deleteAllContactsViaCheck() {
         openHomePage();
@@ -100,8 +99,8 @@ public class ContactHelper {
 
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
         openHomePage();
-        selectContact(contact);
-        initContactModification();
+//        selectContact(contact);
+        initContactModification(contact);
         fillFirstLastNameOfContactForm(modifiedContact);
         submitContactModification();
         returnToHomePage();
@@ -113,12 +112,11 @@ public class ContactHelper {
 
     private void submitContactModification() {
         click(By.name("update"));
-        //manager.driver.findElement(By.name("update")).click();
     }
 
-    private void initContactModification() {
+    private void initContactModification(ContactData contact) {
     //    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
-        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
-//   click(By.cssSelector(String.format("input[value='%s']", contact.idContact())));
+   //click(By.cssSelector(String.format("input[value='%s']", contact.idContact())));
+   click(By.cssSelector(String.format("a[href*='edit.php?id=%s']", contact.idContact())));
     }
 }
