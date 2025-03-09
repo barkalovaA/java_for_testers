@@ -1,19 +1,29 @@
 package tests;
 
+import Common.CommonFunctions;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class TestsCreateGroup extends TestBase {
 
-    public static List<GroupData> groupProvider() {
+    public static List<GroupData> groupProvider() throws IOException {
         var result = new ArrayList<GroupData>();
-        for (var name : List.of("", "group name")) {
+/*        for (var name : List.of("", "group name")) {
             for (var header : List.of("", "group header")) {
                 for (var footer : List.of("", "group footer")) {
                     result.add(new GroupData()
@@ -22,39 +32,57 @@ public class TestsCreateGroup extends TestBase {
                             .withFooter(footer));
                 }
             }
-        }
-        for (int i = 0; i < 5; i++) {
+        } */
+    /*эта часть код заменина на данные из json
+            for (int i = 0; i < 5; i++) {
             result.add(new GroupData()
-                    .withName(randomString(i * 5))
-                    .withHeader(randomString(i * 5))
-                    .withFooter(randomString(i * 5)));
-        }
+                    .withName(CommonFunctions.randomString(i * 5))
+                    .withHeader(CommonFunctions.randomString(i * 5))
+                    .withFooter(CommonFunctions.randomString(i * 5)));
+        } */
+        //код ниже - чтение файла построчно
+/*        var json = "";
+        try (var reader = new FileReader("groups.json");
+            var breader = new BufferedReader(reader)
+        ) {
+            var line = breader.readLine();
+            while (line !=null) {
+                json = json + line;
+                line = breader.readLine();
+            }
+        }*/
+        //чтение файла целиком осуществляется с помощью readString
+        //var json = Files.readString(Paths.get("groups.json"));
+        //ObjectMapper mapper = new ObjectMapper();
+        var mapper = new XmlMapper();
+        var value = mapper.readValue(new File("groups.xml"), new TypeReference<List<GroupData>>() {});
+        result.addAll(value);
         return result;
     }
 
-    //@ParameterizedTest
-    //@ValueSource(strings = {"group name", "group name'"})
-    //public void canCreateGroup(String name) {
-    //    int groupCount = app.groups().getCount();
-    //    app.groups().createGroup(new GroupData(name, "group header", "group footer"));
-    //    int newGroupCount = app.groups().getCount();
-    //    Assertions.assertEquals(groupCount + 1, newGroupCount);
-    //}
+    /*@ParameterizedTest
+    @ValueSource(strings = {"group name", "group name'"})
+    public void canCreateGroup(String name) {
+        int groupCount = app.groups().getCount();
+        app.groups().createGroup(new GroupData(name, "group header", "group footer"));
+        int newGroupCount = app.groups().getCount();
+        Assertions.assertEquals(groupCount + 1, newGroupCount);
+    } */
 
-   // @Test
-   // public void canCreateGroupWithEmptyName() {
-   //     app.groups().createGroup(new GroupData());
-   // }
+   /* @Test
+    public void canCreateGroupWithEmptyName() {
+        app.groups().createGroup(new GroupData());
+    }
 
-   // @Test
-   // public void canCreateGroupWithNameOnly() {
-   //     app.groups().createGroup(new GroupData().withName("some name"));
-   // }
+    @Test
+    public void canCreateGroupWithNameOnly() {
+        app.groups().createGroup(new GroupData().withName("some name"));
+    }
 
-   // @Test
-   // public void canCreateGroupWithHeaderOnly() {
-   //     app.groups().createGroup(new GroupData().withHeader("some Header"));
-   // }
+    @Test
+    public void canCreateGroupWithHeaderOnly() {
+        app.groups().createGroup(new GroupData().withHeader("some Header"));
+    }*/
 
     @ParameterizedTest
     @MethodSource("groupProvider")

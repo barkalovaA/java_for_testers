@@ -1,5 +1,6 @@
 package tests;
 
+import Common.CommonFunctions;
 import model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,36 +33,41 @@ public class TestsCreateContact extends TestBase {
     }
     for (int i = 0; i < 3; i++) {
       result.add(new ContactData ()
-              .withFirstname(randomString(i * 5))
-              .withLastname(randomString(i * 5))
-              .withAddress(randomString(i * 5))
-              .withMobile(randomString(i * 5))
-              .withEmail(randomString(i * 5)));
+              .withFirstname(CommonFunctions.randomString(i * 5))
+              .withLastname(CommonFunctions.randomString(i * 5))
+              .withAddress(CommonFunctions.randomString(i * 5))
+              .withMobile(CommonFunctions.randomString(i * 5))
+              .withEmail(CommonFunctions.randomString(i * 5)));
     }
     return result;
   }
 
   @Test
-  public void canCreateContact() {
-    app.contacts().createContact(new ContactData()
-            .withFirstname(randomString(10))
-            .withLastname(randomString(10)));
- //           .withPhoto("src/test/resources/images/avatar.png")));
+  public void canCreateContactWithPhoto() {
+  var contact = new ContactData()
+            .withFirstname(CommonFunctions.randomString(10))
+            .withLastname(CommonFunctions.randomString(10))
+//            .withPhoto("src/test/resources/images/avatar.png");
+            .withPhoto(randomFile("src/test/resources/images"));
+    app.contacts().createContact(contact);
   }
 
-  //@Test
-  //public void canCreateContactEmpty() {
-  //  app.contacts().createContact(new ContactData());
-  //}
+  @Test
+  public void canCreateContactEmpty() {
+    var contact = new ContactData();
+    app.contacts().createContact(contact);
+  }
 
   @Test
   public void canCreateContactWithNameOnly() {
-    app.contacts().createContact(new ContactData().withFirstname("Some firstname"));
+    var contact = new ContactData().withFirstname("Some firstname");
+    app.contacts().createContact(contact);
   }
 
   @Test
   public void canCreateContactWithAddressAndEmail() {
-    app.contacts().createContact(new ContactData().withAddress("Some address").withEmail("test@test.ru"));
+    var contact = new ContactData().withAddress("Some address").withEmail("test@test.ru");
+    app.contacts().createContact(contact);
   }
 
   @ParameterizedTest

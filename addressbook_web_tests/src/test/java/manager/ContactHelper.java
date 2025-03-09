@@ -3,7 +3,6 @@ package manager;
 import model.ContactData;
 import org.openqa.selenium.By;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +43,8 @@ public class ContactHelper extends HelperBase{
         //manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastname());
         type(By.name("firstname"), contact.firstname());
         type(By.name("lastname"), contact.lastname());
+        attach(By.name("photo"), contact.photo());
     }
-
-    //private void attach (String file) {
-    //    manager.driver.findElement(By.name("photo")).sendKeys(Paths.get(file).toAbsolutePath().toString());
-    //}
 
     public void deleteContact(ContactData contact) {
         selectContact(contact);
