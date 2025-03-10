@@ -50,15 +50,15 @@ public class TestsCreateContact extends TestBase {
     return result;
   }
 
-/*  @Test
+  @Test
   public void canCreateContactWithPhoto() {
-  var contact = new ContactData()
+    var contact = new ContactData()
             .withFirstname(CommonFunctions.randomString(10))
             .withLastname(CommonFunctions.randomString(10))
 //            .withPhoto("src/test/resources/images/avatar.png");
-            .withPhoto(randomFile("src/test/resources/images"));
+            .withPhoto(CommonFunctions.randomFile("src/test/resources/images"));
     app.contacts().createContact(contact);
-  }*/
+  }
 
   @Test
   public void canCreateContactEmpty() {

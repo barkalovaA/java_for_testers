@@ -18,10 +18,10 @@ public class TestBase {
         app.init(System.getProperty("browser","firefox"));
     }
 
-    public static String randomFile (String dir){
+/*    public static String randomFile (String dir){
         var fileNames = new File(dir).list();
         var rnd = new Random();
         var index = rnd.nextInt(fileNames.length);
         return Paths.get(dir, fileNames[index]).toString();
-    }
+    }*/
 }

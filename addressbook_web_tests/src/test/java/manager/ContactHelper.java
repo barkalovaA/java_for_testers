@@ -35,15 +35,9 @@ public class ContactHelper extends HelperBase{
     }
 
     private void fillFirstLastNameOfContactForm(ContactData contact) {
-        //click(By.name("firstname"));
-        //manager.driver.findElement(By.name("firstname")).clear();
-        //manager.driver.findElement(By.name("firstname")).sendKeys(contact.firstname());
-        //click(By.name("lastname"));
-        //manager.driver.findElement(By.name("lastname")).clear();
-        //manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastname());
         type(By.name("firstname"), contact.firstname());
         type(By.name("lastname"), contact.lastname());
-        //attach(By.name("photo"), contact.photo());
+        attach(By.name("photo"), contact.photo());
     }
 
     public void deleteContact(ContactData contact) {
