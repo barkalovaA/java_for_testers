@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import model.ContactData;
 import model.GroupData;
 
 import java.io.File;
@@ -18,7 +19,7 @@ import java.util.List;
 import static java.util.stream.DoubleStream.generate;
 
 public class Generator {
-
+//набор параметров запуска
     @Parameter(names={"--type", "-t"})
     String type;
 
@@ -67,7 +68,16 @@ public class Generator {
     }
 
     private Object generateContacts() {
-        return null;
+        var result = new ArrayList<ContactData>();
+        for (int i = 0; i < count; i++) {
+            result.add(new ContactData ()
+                    .withFirstname(CommonFunctions.randomString(i * 5))
+                    .withLastname(CommonFunctions.randomString(i * 5))
+                    .withAddress(CommonFunctions.randomString(i * 5))
+                    .withMobile(CommonFunctions.randomString(i * 5))
+                    .withEmail(CommonFunctions.randomString(i * 5)));
+        }
+        return result;
     }
 
     private void save(Object data) throws IOException {

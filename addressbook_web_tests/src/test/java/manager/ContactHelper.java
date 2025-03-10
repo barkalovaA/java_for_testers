@@ -43,7 +43,7 @@ public class ContactHelper extends HelperBase{
         //manager.driver.findElement(By.name("lastname")).sendKeys(contact.lastname());
         type(By.name("firstname"), contact.firstname());
         type(By.name("lastname"), contact.lastname());
-        attach(By.name("photo"), contact.photo());
+        //attach(By.name("photo"), contact.photo());
     }
 
     public void deleteContact(ContactData contact) {
@@ -85,10 +85,11 @@ public class ContactHelper extends HelperBase{
         var contacts = new ArrayList<ContactData>();
         var trs = manager.driver.findElements(By.name("entry"));
         for (var tr : trs) {
-            var firstname = tr.getText();
+            //var firstname = tr.getText();
             var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
-            contacts.add(new ContactData().withId(id).withFirstname(firstname));
+//            contacts.add(new ContactData().withId(id).withFirstname(firstname));
+            contacts.add(new ContactData().withId(id).withFirstname("").withLastname("").withAddress("").withEmail("").withMobile(""));
         }
         return contacts;
     }

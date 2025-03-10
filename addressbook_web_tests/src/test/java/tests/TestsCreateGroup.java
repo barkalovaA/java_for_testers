@@ -33,7 +33,7 @@ public class TestsCreateGroup extends TestBase {
                 }
             }
         } */
-    /*эта часть код заменина на данные из json
+    /*эта часть код заменина на данные из файла json, yaml или xml
             for (int i = 0; i < 5; i++) {
             result.add(new GroupData()
                     .withName(CommonFunctions.randomString(i * 5))
