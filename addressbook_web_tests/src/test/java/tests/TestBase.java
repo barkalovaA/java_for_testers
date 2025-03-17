@@ -1,6 +1,7 @@
 package tests;
 
 import manager.ApplicationManager;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.File;
@@ -24,6 +25,10 @@ public class TestBase {
         }
     }
 
+    @AfterEach
+    void checkDatabaseConsistency() {
+        app.jdbc().checkConsistency();
+    }
 /*      эта часть кода перенесена в CommonFunctions
         public static String randomFile (String dir){
         var fileNames = new File(dir).list();

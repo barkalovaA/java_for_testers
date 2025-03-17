@@ -15,9 +15,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TestsCreateGroup extends TestBase {
 
@@ -59,6 +60,21 @@ public class TestsCreateGroup extends TestBase {
         result.addAll(value);
         return result;
     }
+/*  переделано на стрим
+    public static List<GroupData> singleRandomGroup() throws IOException {
+     return List.of(new GroupData()
+             .withName(CommonFunctions.randomString(5))
+             .withHeader(CommonFunctions.randomString(5))
+             .withFooter(CommonFunctions.randomString(5)));
+    }*/
+
+public static Stream<GroupData> randomGroups() throws IOException {
+    Supplier<GroupData> randomGroup = () -> new GroupData()
+            .withName(CommonFunctions.randomString(5))
+            .withHeader(CommonFunctions.randomString(6))
+            .withFooter(CommonFunctions.randomString(7));
+    return Stream.generate(randomGroup).limit(1);
+}
 
     /*@ParameterizedTest
     @ValueSource(strings = {"group name", "group name'"})
@@ -85,22 +101,33 @@ public class TestsCreateGroup extends TestBase {
     }*/
 
     @ParameterizedTest
-    @MethodSource("groupProvider")
-    public void canCreateMultipleGroups(GroupData group) {
+   // @MethodSource("groupProvider")
+    @MethodSource("randomGroups")
+    //public void canCreateMultipleGroups(GroupData group)
+    public void canCreateGroupFromBase(GroupData group) {
         //int groupCount = app.groups().getCount();
-        var oldGroups = app.groups().getList();
-            app.groups().createGroup(group);
+        // дальше заменено на работу с БД(jdbc) var oldGroups = app.groups().getList();
+        //var oldGroups = app.jdbc().getGroupList();
+        var oldGroups = app.hbm().getGroupList();
+        app.groups().createGroup(group);
         //int newGroupCount = app.groups().getCount();
         //Assertions.assertEquals(groupCount + 1, newGroupCount);
-        var newGroups = app.groups().getList();
-        Comparator<GroupData> compareById = (o1, o2) -> {
+        //var newGroups = app.jdbc().getGroupList();
+        var newGroups = app.hbm().getGroupList();
+/*        Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
-        newGroups.sort(compareById);
+        newGroups.sort(compareById);*/
+//        var maxId = newGroups.get(newGroups.size() - 1).id();
+        var extraGroups = newGroups.stream().filter(g -> !oldGroups.contains(g)).toList();
+        var newId = extraGroups.get(0).id();
         var expectedList = new ArrayList<>(oldGroups);
-        expectedList.add(group.withId(newGroups.get(newGroups.size() - 1).id()).withHeader("").withFooter(""));
-        expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        expectedList.add(group.withId(newId));
+       // expectedList.sort(compareById);
+        Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
+
+       // var newUIGroups = app.groups().getList();
+        //TODO произвести сравнение newUIGroups с newGroups по Id и name (1й вариант дописать в эот тест, 2й - отдельный тест)
     }
 
     public static List<GroupData> negativeGroupProvider() {
