@@ -1,6 +1,6 @@
 package tests;
 
-import Common.CommonFunctions;
+import common.CommonFunctions;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import model.ContactData;

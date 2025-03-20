@@ -1,6 +1,6 @@
 package generator;
 
-import Common.CommonFunctions;
+import common.CommonFunctions;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,13 +13,9 @@ import model.GroupData;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.stream.DoubleStream.generate;
 
 public class Generator {
 //набор параметров запуска
